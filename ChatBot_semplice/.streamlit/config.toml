@@ -1,0 +1,29 @@
+[theme]
+base = "light"
+primaryColor = "#2a6fd6"
+backgroundColor = "#f4f7fc"
+secondaryBackgroundColor = "#e9f0fa"
+textColor = "#0f1f3d"
+linkColor = "#2a6fd6"
+borderColor = "#dbe4f0"
+showWidgetBorder = true
+baseRadius = "0.8rem"
+buttonRadius = "999px"
+font = "Inter:https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap, sans-serif"
+headingFont = "Plus Jakarta Sans:https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&display=swap, sans-serif"
+headingFontWeights = 700
+codeFont = "JetBrains Mono:https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap, monospace"
+
+[theme.sidebar]
+backgroundColor = "#f7f9fd"
+secondaryBackgroundColor = "#ffffff"
+
+[client]
+toolbarMode = "minimal"
+
+[server]
+# Solo da questo computer: senza questa riga l'app sarebbe raggiungibile dalla rete.
+address = "localhost"
+
+[browser]
+gatherUsageStats = false

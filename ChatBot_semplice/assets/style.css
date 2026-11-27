@@ -1,0 +1,427 @@
+/* Interfaccia di ATLAS. Colori e font di base sono in .streamlit/config.toml;
+   app.py aggiunge prima di questo file la variabile --atlas-onde (assets/onde.svg). */
+
+:root {
+  --blu: #1f68e0;
+  --blu-scuro: #1b4fae;
+  --blu-tenue: #e1ecfd;
+  --blu-bordo: #bed7fa;
+  --pesca: #e58a42;
+  --pesca-tenue: #fde6cf;
+  --pesca-bordo: #f6c99b;
+  --inchiostro: #0f1f3d;
+  --grigio: #56627c;
+  --bordo: #dbe4f0;
+  --vetro: rgba(255, 255, 255, .78);
+  --ombra: 0 14px 34px -16px rgba(31, 79, 154, .32), 0 2px 6px rgba(31, 79, 154, .05);
+  --gradiente-blu: linear-gradient(135deg, #3d8ff2 0%, #1450c8 100%);
+}
+
+/* ------------------------------------------------------------ sfondo */
+[data-testid="stApp"] {
+  background:
+    var(--atlas-onde) bottom center / 100% clamp(150px, 24vw, 360px) no-repeat,
+    radial-gradient(60rem 32rem at 12% -12%, #d5e5fc 0%, transparent 62%),
+    radial-gradient(48rem 30rem at 96% 6%, #fce8d4 0%, transparent 58%),
+    linear-gradient(180deg, #f1f6fe 0%, #e7effb 100%);
+}
+[data-testid="stHeader"],
+[data-testid="stBottom"],
+[data-testid="stBottom"] > div,
+[data-testid="stBottomBlockContainer"] { background: transparent !important; }
+
+[data-testid="stMainBlockContainer"] {
+  max-width: 880px;
+  padding-top: 2rem;
+  padding-bottom: 9rem;
+}
+
+/* ------------------------------------------------------------ hero */
+.atlas-hero { text-align: center; padding-top: .2rem; }
+.atlas-arte { position: relative; max-width: 720px; margin: 0 auto; }
+/* overflow visibile: l'ombra della tessera PDF sfuma oltre il bordo invece di essere tagliata
+   (orbita e globo hanno già una loro dissolvenza, quindi non sbordano sul titolo) */
+.atlas-globo { display: block; width: 100%; height: auto; overflow: visible; }
+.atlas-arte .atlas-marchio {
+  position: absolute; left: 50%; top: 61%; transform: translate(-50%, -50%);
+  display: flex; flex-direction: column; align-items: center;
+}
+/* Alone chiaro dietro al marchio: lo stacca dal rilievo colorato del globo. */
+.atlas-arte .atlas-marchio::before {
+  content: ""; position: absolute; z-index: -1; left: 50%; top: 52%;
+  width: 150%; height: 135%; transform: translate(-50%, -50%);
+  background: radial-gradient(closest-side, rgba(243, 248, 255, .9) 0%, rgba(240, 246, 255, .7) 40%,
+                              rgba(236, 243, 253, .25) 70%, rgba(236, 243, 253, 0) 100%);
+}
+.atlas-marchio svg { width: clamp(64px, 12vw, 96px); height: auto; filter: drop-shadow(0 8px 14px rgba(27, 79, 174, .22)); }
+.atlas-parola {
+  font-family: "Plus Jakarta Sans", Inter, sans-serif;
+  font-weight: 800; font-size: clamp(1.6rem, 4.4vw, 2.5rem); letter-spacing: .38em;
+  margin: .35rem 0 0 .38em; color: var(--inchiostro); line-height: 1;
+}
+.atlas-linea {
+  width: 34%; height: 3px; border-radius: 3px; margin-top: .9rem;
+  background: linear-gradient(90deg, #1656cf, #3f8ff0 55%, #f1a865);
+}
+.atlas-hero h1 {
+  font-family: "Plus Jakarta Sans", Inter, sans-serif;
+  font-size: clamp(2rem, 6vw, 3.3rem); font-weight: 800; line-height: 1.08;
+  letter-spacing: -.035em; color: var(--inchiostro);
+  margin: .2rem 0 .55rem; padding: 0;
+}
+.atlas-hero h1 .sfumato {
+  background: linear-gradient(90deg, #1a6fe6 0%, #2f86f0 45%, #ec9a52 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.atlas-hero .sottotitolo { color: var(--grigio); font-size: clamp(1rem, 2.4vw, 1.2rem); margin: 0 0 1.6rem; }
+
+/* Le schede intorno al globo galleggiano piano. */
+.atlas-scheda { animation: atlas-galleggia 6s ease-in-out infinite; }
+.atlas-scheda-2 { animation-delay: -2s; }
+.atlas-scheda-3 { animation-delay: -4s; }
+@keyframes atlas-galleggia { 50% { transform: translateY(-6px); } }
+@media (prefers-reduced-motion: reduce) { .atlas-scheda { animation: none; } }
+
+/* ------------------------------------------------------------ casella di domanda */
+[data-testid="stChatInput"] {
+  background: #fff !important;
+  border: 1px solid rgba(255, 255, 255, .95) !important;
+  border-radius: 999px !important;
+  box-shadow: 0 22px 44px -20px rgba(31, 79, 154, .38), 0 3px 10px rgba(31, 79, 154, .06);
+  padding: .35rem !important;
+  position: relative;
+}
+[data-testid="stChatInput"] > div {
+  background: transparent !important; border: none !important; box-shadow: none !important;
+  padding: .35rem .2rem .35rem 2.85rem !important; align-items: center;
+}
+[data-testid="stChatInput"]::before {
+  content: ""; position: absolute; left: 1.25rem; top: 50%; width: 1.15rem; height: 1.15rem;
+  transform: translateY(-50%); pointer-events: none;
+  background: no-repeat center / contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2356627c' stroke-width='2.2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='m20 20-4-4'/%3E%3C/svg%3E");
+}
+[data-testid="stChatInput"]:focus-within { border-color: var(--blu-bordo) !important; }
+[data-testid="stChatInput"] textarea { font-size: 1.02rem; color: var(--inchiostro); }
+[data-testid="stChatInput"] textarea::placeholder { color: #6f7a92; }
+[data-testid="stChatInputSubmitButton"] {
+  width: 2.75rem !important; height: 2.75rem !important; border-radius: 50% !important;
+  background: var(--gradiente-blu) !important; color: #fff !important;
+  box-shadow: 0 8px 18px -8px rgba(29, 86, 192, .7);
+}
+[data-testid="stChatInputSubmitButton"]:disabled { background: #c9d6ea !important; box-shadow: none; }
+[data-testid="stChatInputSubmitButton"] svg { color: #fff !important; fill: #fff !important; }
+
+/* ------------------------------------------------------------ lampadina e menu dei suggerimenti */
+/* La lampadina prende il posto della lente: sta sopra la casella, a sinistra del testo. */
+.st-key-casella { position: relative; }
+.st-key-casella [data-testid="stChatInput"]::before { display: none; }
+.st-key-casella .st-key-piu {
+  position: absolute; left: .75rem; top: 50%; transform: translateY(-50%); z-index: 2; width: auto !important;
+}
+.st-key-piu button {
+  width: 2.35rem; height: 2.35rem; min-height: 0; padding: 0 !important; border-radius: 50% !important;
+  background: var(--blu-tenue) !important; border: 1px solid var(--blu-bordo) !important; color: var(--blu) !important;
+  transition: transform .15s ease, background .15s ease;
+}
+.st-key-piu button:not(:disabled):hover { background: #d3e3fc !important; transform: scale(1.06); }
+.st-key-piu button:disabled { opacity: .5; }
+.st-key-piu button [data-testid="stIconMaterial"] { font-size: 1.35rem; color: var(--blu); margin: 0; }
+.st-key-piu button > div { justify-content: center; gap: 0; margin: 0 !important; }  /* Streamlit lascia un margine negativo per la freccia nascosta */
+.st-key-piu button > div > div[aria-hidden="true"] { display: none; }  /* freccia del menu */
+[data-testid="stPopoverBody"]:has(.st-key-azione_0) { min-width: 17rem; padding: .7rem .6rem .5rem; }
+[class*="st-key-azione_"] button {
+  justify-content: flex-start; border-radius: .8rem !important; padding: .55rem .75rem !important;
+  background: transparent !important; border: 1px solid transparent !important; color: var(--inchiostro) !important;
+}
+[class*="st-key-azione_"] button > div { justify-content: flex-start; width: 100%; }
+[class*="st-key-azione_"] button p { font-size: .9rem; font-weight: 600; }
+[class*="st-key-azione_"] button p span[role="img"] { color: var(--blu); font-size: 1.15rem; margin-right: .45rem; vertical-align: -.2em; }
+[data-testid="stPopoverBody"]:has(.st-key-azione_0) [data-testid="stVerticalBlock"] { gap: .2rem; }
+[class*="st-key-azione_"] button:hover { background: var(--blu-tenue) !important; border-color: var(--blu-bordo) !important; }
+
+/* ------------------------------------------------------------ passi iniziali */
+.passi { display: grid; grid-template-columns: repeat(3, 1fr); gap: .8rem; margin: 2rem 0 .6rem; text-align: left; }
+.passo {
+  background: var(--vetro); backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, .9); border-radius: 1.1rem;
+  padding: 1rem 1rem .9rem; box-shadow: var(--ombra);
+}
+.passo .n {
+  display: inline-grid; place-items: center; width: 1.7rem; height: 1.7rem; border-radius: 50%;
+  background: var(--gradiente-blu); color: #fff; font-weight: 700; font-size: .8rem;
+}
+.passo .t { font-weight: 700; margin: .6rem 0 .2rem; color: var(--inchiostro); }
+.passo .d { font-size: .86rem; color: var(--grigio); line-height: 1.45; }
+@media (max-width: 640px) { .passi { grid-template-columns: 1fr; } }
+
+/* ------------------------------------------------------------ barra in alto nella chat */
+.barra {
+  display: flex; flex-wrap: wrap; align-items: center; gap: .45rem;
+  padding: .55rem .7rem .55rem .9rem; margin-bottom: .8rem;
+  background: var(--vetro); backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, .9); border-radius: 999px; box-shadow: var(--ombra);
+}
+.barra .titolo {
+  display: inline-flex; align-items: center; gap: .5rem; margin-right: auto;
+  font-family: "Plus Jakarta Sans", Inter, sans-serif;
+  font-weight: 800; letter-spacing: .22em; font-size: .98rem; color: var(--inchiostro);
+}
+.barra .titolo svg { width: 1.6rem; height: auto; }
+.chip {
+  display: inline-flex; align-items: center; gap: .35rem;
+  font-size: .78rem; color: var(--grigio); background: #fff;
+  border: 1px solid var(--bordo); border-radius: 999px; padding: .2rem .7rem;
+  white-space: nowrap;
+}
+.chip .punto { width: .45rem; height: .45rem; border-radius: 50%; background: #2fa36b; }
+.chip .punto.spento { background: #c4c9d4; }
+
+/* ------------------------------------------------------------ chat */
+/* Come in una chat vera: le domande a destra in una bolla blu, le risposte di ATLAS a sinistra
+   in una bolla di vetro con l'avatar fuori dalla bolla. */
+[data-testid="stChatMessage"] {
+  background: transparent !important; border: none !important; box-shadow: none !important;
+  padding: 0 !important; gap: .6rem; align-items: flex-start; margin-bottom: .2rem;
+}
+[data-testid="stChatMessageContent"] {
+  min-width: 0; padding: .8rem 1.05rem .7rem;
+  background: var(--vetro); backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, .95); box-shadow: var(--ombra);
+  border-radius: .45rem 1.3rem 1.3rem 1.3rem;  /* angolo stretto verso l'avatar */
+  margin-right: 2.6rem;
+}
+[data-testid="stChatMessageContent"] > div > [data-testid="stVerticalBlock"] { gap: .55rem; }
+/* Streamlit compensa il margine dei paragrafi con un margine inferiore di -1rem sul Markdown:
+   nelle bolle il testo uscirebbe dal bordo, quindi si azzerano entrambi. */
+[data-testid="stChatMessageContent"] [data-testid="stMarkdownContainer"] { margin-bottom: 0 !important; }
+[data-testid="stChatMessageContent"] [data-testid="stMarkdownContainer"] p:last-child { margin-bottom: 0; }
+[data-testid="stChatMessageAvatarCustom"] {
+  width: 2.1rem; height: 2.1rem; border-radius: 50%; margin-top: .15rem;
+  background: var(--gradiente-blu); color: #fff;
+  box-shadow: 0 8px 16px -10px rgba(20, 80, 200, .7);
+}
+/* Domanda dell'utente: bolla blu allineata a destra, larga quanto il testo, senza avatar. */
+[data-testid="stChatMessage"]:has([aria-label="Chat message from user"]) { justify-content: flex-end; }
+[data-testid="stChatMessage"]:has([aria-label="Chat message from user"]) [data-testid="stChatMessageAvatarCustom"] { display: none; }
+[data-testid="stChatMessageContent"][aria-label="Chat message from user"] {
+  flex: 0 1 auto; width: auto; max-width: 78%; margin: 0 0 0 auto;
+  padding: .65rem 1.05rem; background: var(--gradiente-blu); border: none;
+  border-radius: 1.3rem 1.3rem .45rem 1.3rem;
+  box-shadow: 0 12px 26px -16px rgba(20, 80, 200, .75);
+}
+[data-testid="stChatMessageContent"][aria-label="Chat message from user"] p { color: #fff; margin: 0; }
+
+/* Piede della risposta: pillole delle fonti a sinistra, modello e tempo a destra. */
+[class*="st-key-piede_"] {
+  flex-wrap: wrap !important; row-gap: .4rem !important;
+  margin-top: .1rem; padding-top: .55rem; border-top: 1px solid rgba(31, 79, 154, .08);
+}
+[class*="st-key-piede_"] > div:last-child { margin-left: auto; }
+[class*="st-key-fonte_"] button {
+  min-height: 0; padding: .2rem .7rem !important; border-radius: 999px !important;
+  background: var(--blu-tenue) !important; border: 1px solid var(--blu-bordo) !important;
+  color: var(--blu-scuro) !important;
+}
+[class*="st-key-fonte_"] button p {
+  font-size: .78rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+[class*="st-key-fonte_"] button [data-testid="stIconMaterial"] { font-size: 1rem; color: var(--blu); }
+[class*="st-key-fonte_"] button > div { margin: 0 !important; min-width: 0; }
+[class*="st-key-fonte_"] button > div > div[aria-hidden="true"] { display: none; }  /* freccia del menu */
+[class*="st-key-fonte_"] button:hover { background: #d3e3fc !important; }
+[data-testid="stPopoverBody"]:has(.fonte-titolo) { width: min(24rem, 86vw); }
+[data-testid="stPopoverBody"]:has(.fonte-titolo) [data-testid="stImage"] img {
+  border: 1px solid var(--bordo); border-radius: .6rem; background: #fff;
+}
+/* La pagina intera scorre dentro la finestra invece di allungarla. */
+[data-testid="stPopoverBody"]:has(.fonte-titolo) [role="tabpanel"] { max-height: 20rem; overflow-y: auto; }
+.fonte-titolo {
+  display: flex; align-items: center; gap: .45rem;
+  font-size: .86rem; font-weight: 700; color: var(--inchiostro);
+}
+.fonte-titolo .cit { margin: 0; }
+.cit {
+  display: inline-grid; place-items: center; min-width: 1.25rem; height: 1.25rem;
+  padding: 0 .3rem; margin: 0 .08rem; border-radius: .4rem;
+  font-size: .72rem; font-weight: 700; vertical-align: .12em;
+  color: var(--blu-scuro); background: var(--blu-tenue); border: 1px solid var(--blu-bordo);
+}
+.non-so { color: var(--grigio); font-style: italic; }
+.meta { font-size: .74rem; color: #8a94a8; white-space: nowrap; }
+.interpretata {
+  font-size: .82rem; color: var(--grigio); border-left: 3px solid var(--pesca-bordo);
+  padding: .1rem 0 .1rem .6rem; margin-bottom: .5rem;
+}
+.passaggio {
+  font-size: .86rem; line-height: 1.55; white-space: pre-wrap; color: var(--inchiostro);
+  background: #fffbe8; border: 1px solid #f3e3a1; border-radius: .7rem; padding: .7rem .85rem;
+  max-height: 22rem; overflow-y: auto;
+}
+.punteggi { font-size: .74rem; color: var(--grigio); margin-top: .4rem; }
+
+/* ------------------------------------------------------------ barra laterale */
+[data-testid="stSidebar"] {
+  background: linear-gradient(180deg, rgba(255, 255, 255, .92) 0%, rgba(240, 245, 252, .92) 100%) !important;
+  border-right: 1px solid var(--bordo);
+}
+.marchio { display: flex; align-items: center; gap: .7rem; margin: -.4rem 0 .4rem; }
+.marchio svg { width: 2.5rem; height: auto; flex: none; }
+.marchio .nome {
+  font-family: "Plus Jakarta Sans", Inter, sans-serif;
+  font-weight: 800; font-size: 1.25rem; letter-spacing: .24em; color: var(--inchiostro); line-height: 1.1;
+}
+.marchio .sotto { font-size: .74rem; color: var(--grigio); margin-top: .15rem; }
+.sezione {
+  font-size: .7rem; font-weight: 700; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--grigio); margin: 1.2rem 0 .45rem;
+}
+/* Ogni documento è una riga (contenitore orizzontale) con la scheda e il cestino. */
+[class*="st-key-doc_"] {
+  background: #fff; border: 1px solid var(--bordo); border-radius: .8rem;
+  padding: .6rem .4rem .6rem .65rem; box-shadow: 0 6px 16px -12px rgba(31, 79, 154, .4);
+  flex-wrap: nowrap !important;
+}
+[class*="st-key-doc_"] > div:first-child { flex: 1; min-width: 0; }
+/* Streamlit dà al Markdown un margine inferiore di -1rem: nella scheda farebbe uscire il testo dal bordo. */
+[class*="st-key-doc_"] [data-testid="stMarkdownContainer"] { margin-bottom: 0 !important; }
+/* Schede più vicine tra loro dello spazio standard della barra laterale. */
+[data-testid="stLayoutWrapper"]:has(> [class*="st-key-doc_"]) + [data-testid="stLayoutWrapper"]:has(> [class*="st-key-doc_"]) { margin-top: -.45rem; }
+.doc { display: flex; align-items: center; gap: .6rem; min-width: 0; }
+[class*="st-key-elimina_"] button {
+  width: 2rem; height: 2rem; min-height: 0; padding: 0 !important; border-radius: .6rem !important;
+  color: #9aa5ba !important; transition: background .15s ease, color .15s ease;
+}
+[class*="st-key-elimina_"] button > div { margin: 0 !important; }
+[class*="st-key-elimina_"] button [data-testid="stIconMaterial"] { font-size: 1.15rem; }
+[class*="st-key-elimina_"] button:hover { background: #fdecec !important; color: #d0453b !important; }
+.doc .icona {
+  flex: none; display: grid; place-items: center; width: 2rem; height: 2.3rem; border-radius: .4rem;
+  background: var(--blu-tenue); color: var(--blu); font-size: .6rem; font-weight: 800; letter-spacing: .04em;
+}
+.doc > div:last-child { min-width: 0; }
+.doc .nome {
+  font-size: .84rem; font-weight: 600; color: var(--inchiostro); line-height: 1.3;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.doc .info { font-size: .72rem; color: var(--grigio); }
+.doc .avviso { font-size: .72rem; color: #a5631a; }
+.stato-chiave { font-size: .78rem; color: #2f7d55; display: flex; align-items: center; gap: .35rem; }
+.piede { font-size: .72rem; color: var(--grigio); line-height: 1.5; margin-top: 1.4rem; }
+.sezione.primo { margin-top: 0; }
+.sezione .conteggio {
+  display: inline-grid; place-items: center; min-width: 1.15rem; height: 1.15rem; padding: 0 .3rem;
+  margin-left: .45rem; border-radius: 999px; background: var(--blu-tenue); color: var(--blu-scuro);
+  font-size: .66rem; letter-spacing: 0; vertical-align: .05em;
+}
+.vuoto {
+  font-size: .8rem; color: var(--grigio); line-height: 1.45; text-align: center;
+  border: 1px dashed var(--blu-bordo); border-radius: .8rem; padding: .8rem .7rem;
+}
+
+/* Pulsante che apre la barra laterale quando è chiusa: tre linee orizzontali. */
+[data-testid="stExpandSidebarButton"] {
+  width: 2.6rem; height: 2.6rem; border-radius: .9rem;
+  display: grid; place-items: center;
+  background: rgba(255, 255, 255, .85) !important; backdrop-filter: blur(8px);
+  border: 1px solid var(--bordo) !important; box-shadow: var(--ombra);
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+[data-testid="stExpandSidebarButton"]:hover { transform: translateY(-1px); border-color: var(--blu-bordo) !important; }
+[data-testid="stExpandSidebarButton"] [data-testid="stIconMaterial"] {
+  font-size: 0 !important; width: 1.2rem; height: 1.2rem; background: var(--inchiostro);
+  -webkit-mask: var(--atlas-menu) center / contain no-repeat; mask: var(--atlas-menu) center / contain no-repeat;
+}
+:root {
+  --atlas-menu: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round'%3E%3Cpath d='M4 6.5h16M4 12h16M4 17.5h16'/%3E%3C/svg%3E");
+}
+
+/* Barra laterale a colonna: il blocco "Impostazioni" resta sempre in fondo. */
+[data-testid="stSidebarContent"] { display: flex; flex-direction: column; }
+[data-testid="stSidebarUserContent"] { flex: 1; display: flex; flex-direction: column; padding-bottom: 0 !important; }
+[data-testid="stSidebarUserContent"] > div { flex: 1; display: flex; flex-direction: column; }
+[data-testid="stSidebarUserContent"] > div > [data-testid="stVerticalBlock"] { flex: 1; }
+/* Il contenitore è avvolto da uno stLayoutWrapper: è quello che va spinto in fondo. */
+[data-testid="stLayoutWrapper"]:has(> .st-key-fondo_laterale) {
+  margin-top: auto; position: sticky; bottom: 0; z-index: 2;
+}
+.st-key-fondo_laterale {
+  width: calc(100% + 2.5rem) !important; max-width: none !important; margin: 0 -1.25rem; padding: .9rem 1.25rem 1.2rem; border-top: 1px solid var(--bordo);
+  background: linear-gradient(180deg, rgba(240, 245, 252, .7) 0%, rgba(240, 245, 252, .97) 40%);
+}
+.st-key-apri_impostazioni button {
+  justify-content: flex-start; border-radius: .9rem !important; padding: .55rem .9rem;
+  background: #fff; border: 1px solid var(--bordo); color: var(--inchiostro); font-weight: 600;
+}
+.st-key-apri_impostazioni button > div { justify-content: flex-start; width: 100%; }
+.st-key-apri_impostazioni button:hover { border-color: var(--blu-bordo); color: var(--blu-scuro); }
+.st-key-apri_impostazioni [data-testid="stIconMaterial"] { color: var(--blu); }
+
+/* ------------------------------------------------------------ comandi sotto la casella */
+.st-key-comandi {
+  margin-top: .6rem; padding: 0 .6rem;
+  flex-direction: row-reverse; justify-content: flex-start !important;  /* a destra, modello per ultimo */
+}
+.st-key-comandi button {
+  min-height: 2.1rem; padding: .25rem .85rem; font-size: .86rem; font-weight: 600;
+  background: rgba(255, 255, 255, .8); backdrop-filter: blur(8px);
+  border: 1px solid var(--bordo); color: var(--inchiostro);
+  box-shadow: 0 6px 16px -12px rgba(31, 79, 154, .45);
+}
+.st-key-comandi button p { font-size: .86rem; }
+.st-key-comandi button:not(:disabled):hover { border-color: var(--blu-bordo); color: var(--blu-scuro); }
+.st-key-comandi [data-testid="stPopover"] [data-testid="stIconMaterial"] { color: var(--blu); }
+.st-key-pulisci button [data-testid="stIconMaterial"] { color: var(--pesca); }
+.st-key-pulisci button:disabled { opacity: .55; background: rgba(255, 255, 255, .5); }
+[data-testid="stPopoverBody"] { min-width: 19rem; border-radius: 1rem; }
+
+/* ------------------------------------------------------------ finestra impostazioni */
+[data-testid="stDialog"] [role="dialog"] {
+  border-radius: 1.4rem; border: 1px solid rgba(255, 255, 255, .95);
+  background: linear-gradient(180deg, #ffffff 0%, #f3f7fd 100%);
+  box-shadow: 0 30px 70px -30px rgba(15, 31, 61, .45);
+}
+[data-testid="stDialog"] h2 { font-family: "Plus Jakarta Sans", Inter, sans-serif; font-weight: 800; }
+[data-testid="stDialog"] .sezione:first-child { margin-top: .2rem; }
+[data-testid="stDialog"] .piede { margin: .4rem 0 .9rem; }
+
+/* ------------------------------------------------------------ riquadro "Carica documenti" */
+[data-testid="stFileUploaderDropzone"] {
+  display: flex; flex-direction: column; align-items: center !important; gap: .5rem;
+  padding: 1.35rem 1rem 1.15rem !important; text-align: center; cursor: pointer;
+  background:
+    radial-gradient(14rem 7rem at 50% 0%, rgba(61, 143, 242, .13) 0%, transparent 70%),
+    linear-gradient(180deg, rgba(255, 255, 255, .95) 0%, rgba(238, 244, 254, .95) 100%);
+  border: 1.5px dashed var(--blu-bordo); border-radius: 1.2rem;
+  box-shadow: 0 10px 26px -18px rgba(31, 79, 154, .5);
+  transition: border-color .15s ease, box-shadow .15s ease, transform .15s ease;
+}
+[data-testid="stFileUploaderDropzone"]:hover {
+  border-color: var(--blu); transform: translateY(-1px);
+  box-shadow: 0 14px 30px -18px rgba(31, 79, 154, .6);
+}
+/* Icona: tessera blu con nuvola e freccia, come le tessere di vetro del globo. */
+[data-testid="stFileUploaderDropzone"]::before {
+  content: ""; order: -2; width: 3.1rem; height: 3.1rem; border-radius: .95rem;
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 18.5h-.5a4.5 4.5 0 0 1-.6-8.96A6 6 0 0 1 17.6 8.6 4.25 4.25 0 0 1 17.5 18.5H17'/%3E%3Cpath d='M12 20v-7.5M9 15l3-3 3 3'/%3E%3C/svg%3E") center / 1.65rem no-repeat,
+    var(--gradiente-blu);
+  box-shadow: 0 10px 20px -10px rgba(20, 80, 200, .7), inset 0 1px 0 rgba(255, 255, 255, .45);
+}
+/* Titolo e limiti del file. */
+[data-testid="stFileUploaderDropzoneInstructions"] { order: -1; align-self: center !important; text-align: center !important; margin: 0 !important; }
+[data-testid="stFileUploaderDropzoneInstructions"] > div { margin: 0 !important; display: flex; flex-direction: column; align-items: center; }
+[data-testid="stFileUploaderDropzoneInstructions"] > div::before {
+  content: "Trascina qui i tuoi PDF"; font-weight: 700; font-size: .92rem; color: var(--inchiostro);
+  margin-bottom: .1rem;
+}
+[data-testid="stFileUploaderDropzoneInstructions"] span { font-size: .74rem; color: var(--grigio); }
+/* Pulsante: pillola blu "Scegli i file" al posto di "Upload". */
+[data-testid="stFileUploaderDropzone"] button {
+  margin-top: .2rem; min-height: 2.15rem; padding: .3rem 1.1rem; border-radius: 999px;
+  background: var(--gradiente-blu) !important; border: none !important; color: #fff !important;
+  box-shadow: 0 8px 18px -10px rgba(20, 80, 200, .8);
+}
+[data-testid="stFileUploaderDropzone"] button:hover { filter: brightness(1.06); }
+[data-testid="stFileUploaderDropzone"] button [data-testid="stIconMaterial"] { color: #fff; font-size: 1.05rem; }
+[data-testid="stFileUploaderDropzone"] button p { font-size: 0; }
+[data-testid="stFileUploaderDropzone"] button p::after { content: "Scegli i file"; font-size: .84rem; font-weight: 600; }
