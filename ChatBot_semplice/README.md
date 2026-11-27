@@ -18,13 +18,13 @@ domanda ─────────────────────► top-k
 
 ## Installazione (Windows)
 
-L'ambiente Python `.venv` sta nella cartella superiore ed è condiviso con la versione completa.
-Se non c'è ancora, dalla cartella `ChatBot Text Mining`:
+Dalla cartella `ChatBot_semplice` del repository, crea l'ambiente Python `.venv` e installa
+le dipendenze:
 
 ```powershell
 python -m venv .venv
 .venv\Scripts\python -m pip install torch --index-url https://download.pytorch.org/whl/cu128
-.venv\Scripts\python -m pip install -r ChatBot_semplice\requirements.txt
+.venv\Scripts\python -m pip install -r requirements.txt
 ```
 
 La riga con `torch` serve solo se hai una GPU NVIDIA. Senza GPU puoi saltarla, e BGE-M3 gira su CPU.
@@ -32,7 +32,7 @@ La riga con `torch` serve solo se hai una GPU NVIDIA. Senza GPU puoi saltarla, e
 ## Chiave API (gratuita)
 
 1. Crea una chiave su [Groq](https://console.groq.com/keys).
-2. Aprila nel file `.env` di questa cartella e incollala dopo l'uguale:
+2. Copia `.env.example` in un nuovo file `.env` in questa cartella e incolla la chiave dopo l'uguale:
    ```
    GROQ_API_KEY=gsk_...
    ```
@@ -45,8 +45,8 @@ Va lanciata **da questa cartella**, perché Streamlit legge il tema da `.streaml
 cartella corrente:
 
 ```powershell
-cd "C:\Users\dome-\Documents\ChatBot Text Mining\ChatBot_semplice"
-..\.venv\Scripts\streamlit run app.py
+cd ChatBot_semplice
+.venv\Scripts\streamlit run app.py
 ```
 
 Si apre `http://localhost:8501`. Al primo avvio viene scaricato BGE-M3 (circa 2,3 GB).
@@ -73,9 +73,9 @@ caricati all'avvio, comodo per una demo.
 ## Test e valutazione
 
 ```powershell
-..\.venv\Scripts\python -m pytest -q
-..\.venv\Scripts\python eval.py percorso\TextMining_2026-27_DayOne.pdf
-..\.venv\Scripts\python eval.py percorso\TextMining_2026-27_DayOne.pdf --risposte
+.venv\Scripts\python -m pytest -q
+.venv\Scripts\python eval.py percorso\TextMining_2026-27_DayOne.pdf
+.venv\Scripts\python eval.py percorso\TextMining_2026-27_DayOne.pdf --risposte
 ```
 
 ## Limiti
